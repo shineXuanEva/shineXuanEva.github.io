@@ -8,3 +8,230 @@
     seventeen to the world
   </body>
 </html>
+/* styles.css
+   現代、乾淨、響應式歌詞查詢介面
+*/
+
+/* === 根變數 === */
+:root{
+  --bg: #0f1724;             /* 深色背景 */
+  --card: #0b1220;           /* 卡片色 */
+  --muted: #9aa4b2;          /* 次要文字 */
+  --accent: #7cdbff;         /* 按鈕 / 重點色 */
+  --glass: rgba(255,255,255,0.03);
+  --radius: 12px;
+  --max-width: 920px;
+  --gap: 18px;
+  --shadow: 0 6px 20px rgba(2,8,23,0.6);
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", monospace;
+  --ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* 自動適配深/淺色（若用者為 light theme） */
+@media (prefers-color-scheme: light) {
+  :root{
+    --bg: #f5f7fb;
+    --card: #ffffff;
+    --muted: #56606f;
+    --accent: #0aa5d0;
+    --glass: rgba(10,10,10,0.03);
+    --shadow: 0 6px 18px rgba(15,23,42,0.06);
+  }
+}
+
+/* 全局重設與版面 */
+*{box-sizing: border-box}
+html,body{
+  height:100%;
+  margin:0;
+  font-family: var(--ui);
+  background: linear-gradient(180deg, var(--bg), color-mix(in srgb, var(--bg) 90%, black 10%));
+  color: #e6eef6;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  padding: 40px 20px;
+}
+
+/* 中央容器 */
+.app{
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--gap);
+}
+
+/* 標題區 */
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 16px;
+  padding: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255,255,255,0.03);
+}
+.header h1{
+  font-size: 1.05rem;
+  margin:0;
+  letter-spacing: -0.02em;
+}
+.header p{ margin:0; color:var(--muted); font-size:0.9rem; }
+
+/* 表單卡片 */
+.search-card{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+/* 表單元件 */
+.form-row{
+  display:flex;
+  gap:10px;
+  width:100%;
+  align-items:center;
+}
+.form-row input[type="text"]{
+  flex:1;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+  color: inherit;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+  font-size: 0.95rem;
+}
+.form-row input::placeholder{ color: rgba(255,255,255,0.35); }
+
+/* 按鈕 */
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 80%, white 20%));
+  color: #06202a;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25), inset 0 -2px 0 rgba(255,255,255,0.06);
+}
+.btn:active{ transform: translateY(1px); }
+
+/* 主內容：歌詞與資訊兩欄（在寬螢幕） */
+.main{
+  display:grid;
+  grid-template-columns: 1fr 360px;
+  gap: var(--gap);
+  align-items:start;
+}
+
+/* 歌詞顯示區卡片 */
+.lyrics-card{
+  padding: 20px;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  min-height: 320px;
+  max-height: 64vh;
+  overflow:auto;
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: var(--shadow);
+}
+
+/* 歌詞標題區 */
+.track-info{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom: 12px;
+}
+.artwork{
+  width:56px;
+  height:56px;
+  border-radius:8px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family: var(--mono);
+  color: var(--muted);
+  font-size: 0.8rem;
+  flex-shrink:0;
+}
+.track-meta h2{
+  margin:0;
+  font-size:1rem;
+  letter-spacing:-0.01em;
+}
+.track-meta p{ margin:0; color:var(--muted); font-size:0.9rem; }
+
+/* 歌詞主體 */
+.lyrics{
+  margin-top: 8px;
+  white-space: pre-wrap; /* 保留換行 */
+  line-height: 1.65;
+  font-size: 1rem;
+  color: #e8f3ff;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  padding-bottom: 8px;
+}
+
+/* 行號樣式（視覺輔助） */
+.lyrics-line{
+  display:block;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+.lyrics-line:nth-child(odd){
+  background: linear-gradient(90deg, rgba(255,255,255,0.007), rgba(255,255,255,0.003));
+}
+
+/* 右側資訊卡 */
+.side-card{
+  padding: 16px;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: var(--shadow);
+}
+.side-card h3{ margin-top:0; margin-bottom:10px; }
+.meta-row{ font-size:0.92rem; color:var(--muted); margin-bottom:8px; }
+
+/* 空狀態提示 */
+.empty{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:180px;
+  color:var(--muted);
+  font-size:0.95rem;
+  text-align:center;
+  padding:18px;
+  border-radius:10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005));
+}
+
+/* 小螢幕：改成單欄 */
+@media (max-width: 880px){
+  .main{ grid-template-columns: 1fr; }
+  .header{ flex-direction:column; align-items:flex-start; gap:12px; }
+  .search-card{ flex-direction:column; align-items:stretch; }
+  .artwork{ width:48px; height:48px; }
+}
+
+/* 可選：印表樣式微調 */
+@media print{
+  body{ background: #fff; color:#000; padding:0; }
+  .btn, .search-card, .side-card, .header{ display:none; }
+  .lyrics-card{ border:none; box-shadow:none; }
+}
