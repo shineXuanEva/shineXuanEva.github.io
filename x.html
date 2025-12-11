@@ -34,27 +34,39 @@
 <style>
 /* ========== 變數 + 基本重置 ========== */
 :root{
-  --light-blue: #e1efff;     
-  --light-blue-2: #d3e5ff;  
-  --light-pink: #ffe1ef;     
-  --card-bg: rgba(255,255,255,0.6);
-  --card-border: rgba(0,0,0,0.08);
+  /* SEVENTEEN 應援色：Rose Quartz + Serenity（淡粉＋淡藍） */
+  --rose-quartz: #fce4ef;
+  --rose-quartz-light: #f9ecf3;
+  --serenity: #d9eaff;
+  --serenity-light: #e8f3ff;
+
+  --card-bg: rgba(255,255,255,0.75);
+  --card-border: rgba(0,0,0,0.06);
   --glass-blur: 10px;
-  --text: #1e1e1e;           
-  --muted: rgba(30,30,30,0.6);
-  --accent: #b65bcb;
+
+  --text: #2a2a2a;
+  --muted: rgba(0,0,0,0.55);
+
   --radius: 14px;
   --max-width: 920px;
 }
 
+/* Reset */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
 
+/* 背景：非常淡的 Rose Quartz → Serenity */
 body{
   min-height:100vh;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", Arial, "PingFang TC", "Microsoft JhengHei", sans-serif;
   color:var(--text);
-  background: linear-gradient(135deg, var(--light-blue) 0%, var(--light-blue-2) 45%, var(--light-pink) 100%);
+  background: linear-gradient(
+    135deg, 
+    var(--rose-quartz) 0%, 
+    var(--rose-quartz-light) 30%,
+    var(--serenity-light) 70%, 
+    var(--serenity) 100%
+  );
   display:flex;
   flex-direction:column;
   align-items:center;
