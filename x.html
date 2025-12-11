@@ -34,33 +34,34 @@
 <style>
 /* ========== 變數 + 基本重置 ========== */
 :root{
-  --gem-blue: #0f4c81;
-  --gem-blue-2:#1b6aa8;
-  --rose-pink:#ff6fa3;
-  --card-bg: rgba(255,255,255,0.08);
-  --card-border: rgba(255,255,255,0.12);
-  --glass-blur: 8px;
-  --text: #f6f7fb;
-  --muted: rgba(246,247,251,0.78);
-  --accent: #ffd166;
+  --light-blue: #e1efff;     
+  --light-blue-2: #d3e5ff;  
+  --light-pink: #ffe1ef;     
+  --card-bg: rgba(255,255,255,0.6);
+  --card-border: rgba(0,0,0,0.08);
+  --glass-blur: 10px;
+  --text: #1e1e1e;           
+  --muted: rgba(30,30,30,0.6);
+  --accent: #b65bcb;
   --radius: 14px;
   --max-width: 920px;
-  --ui-padding: 18px;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
+
 body{
   min-height:100vh;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", Arial, "PingFang TC", "Microsoft JhengHei", sans-serif;
   color:var(--text);
-  background: linear-gradient(135deg, var(--gem-blue) 0%, var(--gem-blue-2) 45%, var(--rose-pink) 100%);
+  background: linear-gradient(135deg, var(--light-blue) 0%, var(--light-blue-2) 45%, var(--light-pink) 100%);
   display:flex;
   flex-direction:column;
   align-items:center;
   padding:40px 20px;
   gap:22px;
 }
+
 
 /* 中央容器 */
 .content, .search-area{
