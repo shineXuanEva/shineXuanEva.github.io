@@ -32,117 +32,172 @@
 <title>歌詞查詢網站</title>
 
 <style>
-/* ========== 變數 + 基本重置 ========== */
 :root{
-  /* SEVENTEEN 應援色：Rose Quartz + Serenity（淡粉＋淡藍） */
-  --rose-quartz: #fce4ef;
-  --rose-quartz-light: #f9ecf3;
-  --serenity: #d9eaff;
-  --serenity-light: #e8f3ff;
+      --rose-quartz: #fce4ef;
+      --rose-quartz-light: #f9ecf3;
+      --serenity: #d9eaff;
+      --serenity-light: #e8f3ff;
+      --card-bg: rgba(255,255,255,0.75);
+      --card-border: rgba(0,0,0,0.06);
+      --glass-blur: 10px;
+      --text: #2a2a2a;
+      --muted: rgba(0,0,0,0.55);
+      --radius: 14px;
+      --max-width: 920px;
+    }
 
-  --card-bg: rgba(255,255,255,0.75);
-  --card-border: rgba(0,0,0,0.06);
-  --glass-blur: 10px;
+    /* ====== 若你擁有官方字體檔，請把檔案上傳到同一個伺服器目錄，然後解除下面註解，修改檔名即可使用 ======
+    @font-face {
+      font-family: 'SeventeenOfficial';
+      src: url('SeventeenOfficial.woff2') format('woff2'),
+           url('SeventeenOfficial.woff') format('woff');
+      font-weight: 400 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    ====================================================================================================== */
 
-  --text: #2a2a2a;
-  --muted: rgba(0,0,0,0.55);
+    /* Reset */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      min-height:100vh;
+      font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, "PingFang TC", "Microsoft JhengHei", sans-serif;
+      color:var(--text);
+      background: linear-gradient(135deg, var(--rose-quartz) 0%, var(--rose-quartz-light) 30%, var(--serenity-light) 70%, var(--serenity) 100%);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:40px 20px;
+      gap:22px;
+    }
 
-  --radius: 14px;
-  --max-width: 920px;
-}
+    .content, .search-area{
+      width:100%;
+      max-width:var(--max-width);
+    }
 
-/* Reset */
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
+    /* SEVENTEEN 大標題 */
+    .site-title {
+      text-align:center;
+      color: #ffffff;
+      /* 若你啟用了官方字體，把 font-family 改為 'SeventeenOfficial', fallback 為 Montserrat */
+      font-family: 'SeventeenOfficial', "Montserrat", "Noto Sans TC", sans-serif;
+      font-weight: 900;
+      letter-spacing: 0.18em;       /* 增加間距，讓字更有標誌感 */
+      font-size: clamp(36px, 6.5vw, 92px); /* 響應式大小，手機→桌面自適應 */
+      text-transform: uppercase;
+      margin: 6px 0 10px 0;
+      text-shadow:
+        0 2px 8px rgba(0,0,0,0.35),
+        0 1px 0 rgba(255,255,255,0.06) inset;
+      line-height: 0.95;
+    }
 
-/* 背景：非常淡的 Rose Quartz → Serenity */
-body{
-  min-height:100vh;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", Arial, "PingFang TC", "Microsoft JhengHei", sans-serif;
-  color:var(--text);
-  background: linear-gradient(
-    135deg, 
-    var(--rose-quartz) 0%, 
-    var(--rose-quartz-light) 30%,
-    var(--serenity-light) 70%, 
-    var(--serenity) 100%
-  );
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:40px 20px;
-  gap:22px;
-}
+    /* 搜尋區（保留你原本設計）*/
+    .search-area{
+      display:flex;
+      justify-content:center;
+    }
+    #song-form{
+      width:100%;
+      display:flex;
+      gap:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border:1px solid var(--card-border);
+      border-radius:calc(var(--radius) + 6px);
+      padding:12px;
+      align-items:center;
+      backdrop-filter: blur(var(--glass-blur));
+      box-shadow: 0 6px 20px rgba(7,10,25,0.25);
+    }
+    #song-input{
+      flex:1;
+      min-width:0;
+      padding:12px 14px;
+      border-radius:10px;
+      border: none;
+      font-size:16px;
+      background: rgba(255,255,255,0.04);
+      color:var(--text);
+      outline: none;
+      box-shadow: inset 0 -1px 0 rgba(0,0,0,0.2);
+    }
+    #song-input::placeholder{ color: var(--muted); font-style:italic; }
+    #song-form button{
+      padding:10px 16px;
+      border-radius:10px;
+      border: none;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      color:var(--text);
+      font-weight:600;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.18);
+    }
+    #song-form button:active{ transform: translateY(1px) }
+    #song-form button:hover{ box-shadow: 0 10px 30px rgba(0,0,0,0.22) }
 
+    /* 歌詞區樣式簡化 */
+    .lyrics{
+      margin-top:6px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border-radius:var(--radius);
+      border:1px solid var(--card-border);
+      padding:18px;
+      min-height:120px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
 
-/* 中央容器 */
-.content, .search-area{
-  width:100%;
-  max-width:var(--max-width);
-}
+    .lyric-line{ margin-bottom:10px }
+    .lyric-line .original{ font-weight:600 }
+    .lyric-line .translation{ color: var(--muted); font-size:14px }
 
-/* 搜尋區 */
-.search-area{
-  display:flex;
-  justify-content:center;
-}
-#song-form{
-  width:100%;
-  display:flex;
-  gap:12px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-  border:1px solid var(--card-border);
-  border-radius:calc(var(--radius) + 6px);
-  padding:12px;
-  align-items:center;
-  backdrop-filter: blur(var(--glass-blur));
-  box-shadow: 0 6px 20px rgba(7,10,25,0.25);
-}
+  </style>
+</head>
+<body>
 
-/* 輸入欄 */
-#song-input{
-  flex:1;
-  min-width:0;
-  padding:12px 14px;
-  border-radius:10px;
-  border: none;
-  font-size:16px;
-  background: rgba(255,255,255,0.04);
-  color:var(--text);
-  outline: none;
-  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.2);
-}
-#song-input::placeholder{ color: var(--muted); font-style:italic; }
+  <!-- 大標題：SEVENTEEN -->
+  <header class="site-title" role="banner" aria-label="網站大標題">
+    SEVENTEEN
+  </header>
 
-/* 按鈕 */
-#song-form button{
-  padding:10px 16px;
-  border-radius:10px;
-  border: none;
-  background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
-  color:var(--text);
-  font-weight:600;
-  cursor:pointer;
-  transition: transform .12s ease, box-shadow .12s ease;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.18);
-}
-#song-form button:active{ transform: translateY(1px) }
-#song-form button:hover{ box-shadow: 0 10px 30px rgba(0,0,0,0.22) }
+  <!-- 原本的搜尋區 -->
+  <header class="search-area" aria-label="歌詞搜尋區">
+    <form id="song-form" onsubmit="return false;">
+      <input id="song-input" type="text" placeholder="輸入歌名..." />
+      <button type="submit">搜尋</button>
+    </form>
+  </header>
 
-/* 歌詞區 */
-.lyrics{
-  margin-top:6px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-  border-radius:var(--radius);
-  border:1px
+  <main class="content">
+    <section class="lyrics" id="lyrics" aria-live="polite">
+      <!-- JS 會動態插入多個 .lyric-line -->
+      <div class="lyric-line">
+        <div class="original">範例原文句子</div>
+        <div class="translation">範例中文翻譯</div>
+      </div>
+    </section>
+  </main>
 
-<div class="lyric-line">
-  <div class="original">原文句子</div>
-  <div class="translation">中文翻譯</div>
-</div>
+  <script>
+    // 這裡是簡單示例：按下搜尋會在歌詞區顯示你輸入的歌名（方便測試標題排版）
+    document.getElementById('song-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const q = document.getElementById('song-input').value.trim();
+      const container = document.getElementById('lyrics');
+      if(!q){ container.innerHTML = '<div class="lyric-line"><div class="original">請輸入歌名</div></div>'; return; }
+      container.innerHTML = `<div class="lyric-line"><div class="original">正在搜尋：${q}</div></div>`;
+      // 你可以在這裡接 API 或本地歌詞資料庫，然後把歌詞插入 container
+    });
 
+    // 也讓 Enter 鍵可觸發（若你改為真正 submit，這段可移除）
+    document.getElementById('song-input').addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){
+        e.preventDefault();
+        document.getElementById('song-form').dispatchEvent(new Event('submit', {cancelable:true}));
+      }
+    });
+  </script>
 </body>
-
-  </body>
 </html>
-
