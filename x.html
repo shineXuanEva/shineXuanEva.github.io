@@ -156,17 +156,3 @@
   </style>
 </head>
 <body>
-
- 
- 
-
-    // 也讓 Enter 鍵可觸發（若你改為真正 submit，這段可移除）
-    document.getElementById('song-input').addEventListener('keydown', function(e){
-      if(e.key === 'Enter'){
-        e.preventDefault();
-        document.getElementById('song-form').dispatchEvent(new Event('submit', {cancelable:true}));
-      }
-    });
-  </script>
-</body>
-</html>
