@@ -12,9 +12,8 @@
       --rose-quartz-light: #f9ecf3;
       --serenity: #d9eaff;
       --serenity-light: #e8f3ff;
-      --card-bg: rgba(255,255,255,0.75);
+      --card-bg: rgba(255,255,255,0.8);
       --card-border: rgba(0,0,0,0.06);
-      --glass-blur: 10px;
       --text: #2a2a2a;
       --muted: rgba(0,0,0,0.55);
       --radius: 14px;
@@ -26,56 +25,47 @@
 
     body{
       min-height:100vh;
-      font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI",
-                   Roboto, Arial, "PingFang TC", "Microsoft JhengHei", sans-serif;
-      color:var(--text);
+      font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", Arial, "Microsoft JhengHei", sans-serif;
       background: linear-gradient(
         135deg,
-        var(--rose-quartz) 0%,
-        var(--rose-quartz-light) 30%,
-        var(--serenity-light) 70%,
-        var(--serenity) 100%
+        var(--rose-quartz),
+        var(--rose-quartz-light),
+        var(--serenity-light),
+        var(--serenity)
       );
       display:flex;
       flex-direction:column;
       align-items:center;
       padding:40px 20px;
       gap:18px;
+      color:var(--text);
     }
 
-    /* ===== SEVENTEEN 官方感標題 ===== */
+    /* ===== SEVENTEEN 標題 ===== */
     .site-title{
       font-size:42px;
       font-weight:200;
       letter-spacing:14px;
       color:white;
-      text-align:center;
-      margin-bottom:6px;
-      font-family:"Helvetica Neue", Arial, sans-serif;
       text-shadow:0 2px 6px rgba(0,0,0,0.25);
+      font-family:"Helvetica Neue", Arial, sans-serif;
     }
 
-    .content, .search-area{
+    .search-area, .content{
       width:100%;
       max-width:var(--max-width);
     }
 
-    .search-area{
-      display:flex;
-      justify-content:center;
-    }
-
+    /* ===== 搜尋區 ===== */
     #song-form{
-      width:100%;
       display:flex;
       gap:12px;
-      background: var(--card-bg);
-      border:1px solid var(--card-border);
-      border-radius:calc(var(--radius) + 6px);
+      background:var(--card-bg);
       padding:12px;
-      align-items:center;
-      backdrop-filter: blur(var(--glass-blur));
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      border-radius:20px;
+      border:1px solid var(--card-border);
+      box-shadow:0 6px 20px rgba(0,0,0,0.15);
     }
 
     #song-input{
@@ -84,36 +74,30 @@
       border-radius:10px;
       border:none;
       font-size:16px;
-      background:white;
-      color:var(--text);
       outline:none;
     }
 
-    #song-input::placeholder{
-      color:var(--muted);
-      font-style:italic;
-    }
-
-    #song-form button{
-      padding:10px 16px;
-      border-radius:10px;
+    #search-btn{
+      padding:10px 18px;
       border:none;
-      background:#ffffffcc;
+      border-radius:10px;
+      background:white;
       font-weight:600;
       cursor:pointer;
     }
 
+    /* ===== 歌詞區 ===== */
     .lyrics{
-      margin-top:8px;
-      background: var(--card-bg);
+      margin-top:10px;
+      background:var(--card-bg);
       border-radius:var(--radius);
-      border:1px solid var(--card-border);
       padding:18px;
       min-height:120px;
+      border:1px solid var(--card-border);
       box-shadow:0 8px 24px rgba(0,0,0,0.06);
     }
 
-    .lyric-line{ margin-bottom:10px }
+    .lyric-line{ margin-bottom:12px }
     .original{ font-weight:600 }
     .translation{ font-size:14px; color:var(--muted) }
   </style>
@@ -121,77 +105,68 @@
 
 <body>
 
-  <!-- ✅ 搜尋欄正上方的 SEVENTEEN -->
+  <!-- 標題 -->
   <div class="site-title">SEVENTEEN</div>
 
-  <!-- 搜尋區 -->
-  <header class="search-area">
-    <form id="song-form">
-      <input id="song-input" type="text" placeholder="輸入歌名..." />
-      <button type="submit">搜尋</button>
-    </form>
-  </header>
+  <!-- 搜尋欄 -->
+  <div class="search-area">
+    <div id="song-form">
+      <input id="song-input" type="text" placeholder="輸入歌名（例：HOME）" />
+      <button id="search-btn">搜尋</button>
+    </div>
+  </div>
 
-  <!-- 歌詞區 -->
+  <!-- 歌詞顯示 -->
   <main class="content">
     <section class="lyrics" id="lyrics">
-      <div class="lyric-line">
-        <div class="original">範例原文句子</div>
-        <div class="translation">範例中文翻譯</div>
-      </div>
+      <div class="translation">請輸入歌名後按搜尋</div>
     </section>
   </main>
-<script>
-/*
-  ⚠️ 示範用歌詞資料（避免直接使用版權歌詞）
-  若你有合法 API / 自建歌詞資料庫，可在此替換
-*/
 
-<script>
-const demoLyrics = {
-  "HOME": [
-    { en: "I'm at the edge of the world", zh: "我站在世界的邊緣" },
-    { en: "Calling you my home", zh: "把你稱作我的歸屬" }
-  ],
-  "VERY NICE": [
-    { en: "Very nice", zh: "真的太棒了" },
-    { en: "Feels so good", zh: "感覺超級好" }
-  ]
-};
+  <!-- ===== JavaScript ===== -->
+  <script>
+    const demoLyrics = {
+      "HOME": [
+        { en: "I'm at the edge of the world", zh: "我站在世界的邊緣" },
+        { en: "Calling you my home", zh: "把你稱作我的歸屬" }
+      ],
+      "VERY NICE": [
+        { en: "Very nice", zh: "真的太棒了" },
+        { en: "Feels so good", zh: "感覺超級好" }
+      ]
+    };
 
-const form = document.getElementById("song-form");
-const input = document.getElementById("song-input");
-const lyricsBox = document.getElementById("lyrics");
+    const input = document.getElementById("song-input");
+    const lyricsBox = document.getElementById("lyrics");
+    const btn = document.getElementById("search-btn");
 
-form.addEventListener("submit", function (event) {
-  event.preventDefault(); 
+    btn.addEventListener("click", function () {
+      const songName = input.value.trim().toUpperCase();
+      lyricsBox.innerHTML = "";
 
-  const songName = input.value.trim().toUpperCase();
-  lyricsBox.innerHTML = "";
+      if (!songName) {
+        lyricsBox.innerHTML = "<div class='translation'>請輸入歌名</div>";
+        return;
+      }
 
-  if (!songName) {
-    lyricsBox.innerHTML = "<div class='translation'>請輸入歌名</div>";
-    return;
-  }
+      if (!demoLyrics[songName]) {
+        lyricsBox.innerHTML =
+          "<div class='translation'>找不到此歌曲（示範資料中）</div>";
+        return;
+      }
 
-  if (!demoLyrics[songName]) {
-    lyricsBox.innerHTML =
-      "<div class='translation'>找不到此歌曲（示範資料中）</div>";
-    return;
-  }
-
-  demoLyrics[songName].forEach(line => {
-    const div = document.createElement("div");
-    div.className = "lyric-line";
-    div.innerHTML = `
-      <div class="original">${line.en}</div>
-      <div class="translation">${line.zh}</div>
-    `;
-    lyricsBox.appendChild(div);
-  });
-});
-</script>
-
+      demoLyrics[songName].forEach(line => {
+        const div = document.createElement("div");
+        div.className = "lyric-line";
+        div.innerHTML = `
+          <div class="original">${line.en}</div>
+          <div class="translation">${line.zh}</div>
+        `;
+        lyricsBox.appendChild(div);
+      });
+    });
+  </script>
 
 </body>
 </html>
+
