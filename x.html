@@ -59,23 +59,28 @@
 
     /* ===== 搜尋區 ===== */
     #song-form{
-      display:flex;
-      gap:12px;
-      background:var(--card-bg);
-      padding:12px;
-      border-radius:20px;
-      border:1px solid var(--card-border);
-      box-shadow:0 6px 20px rgba(0,0,0,0.15);
-    }
+  display:flex;
+  gap:12px;
+  background: rgba(255, 255, 255, 0.55); /* 半透明 */
+  padding:12px;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,0.4);
+  backdrop-filter: blur(12px);            /* 玻璃模糊 */
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:0 8px 24px rgba(0,0,0,0.12);
+}
+
 
     #song-input{
-      flex:1;
-      padding:12px 14px;
-      border-radius:10px;
-      border:none;
-      font-size:16px;
-      outline:none;
-    }
+  flex:1;
+  padding:12px 14px;
+  border-radius:10px;
+  border:none;
+  font-size:16px;
+  outline:none;
+  background: rgba(255,255,255,0.65); /* 半透明 */
+  color: var(--text);
+}
 
     #search-btn{
       padding:10px 18px;
@@ -88,14 +93,17 @@
 
     /* ===== 歌詞區 ===== */
     .lyrics{
-      margin-top:10px;
-      background:var(--card-bg);
-      border-radius:var(--radius);
-      padding:18px;
-      min-height:120px;
-      border:1px solid var(--card-border);
-      box-shadow:0 8px 24px rgba(0,0,0,0.06);
-    }
+  margin-top:10px;
+  background: rgba(255,255,255,0.55); /* 半透明 */
+  border-radius:var(--radius);
+  padding:18px;
+  min-height:120px;
+  border:1px solid rgba(255,255,255,0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:0 8px 24px rgba(0,0,0,0.08);
+}
+
 
     .lyric-line{ margin-bottom:12px }
     .original{ font-weight:600 }
