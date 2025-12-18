@@ -147,6 +147,7 @@
   若你有合法 API / 自建歌詞資料庫，可在此替換
 */
 
+<script>
 const demoLyrics = {
   "HOME": [
     { en: "I'm at the edge of the world", zh: "我站在世界的邊緣" },
@@ -162,7 +163,9 @@ const form = document.getElementById("song-form");
 const input = document.getElementById("song-input");
 const lyricsBox = document.getElementById("lyrics");
 
-form.addEventListener("submit", function () {
+form.addEventListener("submit", function (event) {
+  event.preventDefault(); 
+
   const songName = input.value.trim().toUpperCase();
   lyricsBox.innerHTML = "";
 
@@ -188,6 +191,7 @@ form.addEventListener("submit", function () {
   });
 });
 </script>
+
 
 </body>
 </html>
