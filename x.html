@@ -141,6 +141,53 @@
       </div>
     </section>
   </main>
+<script>
+/*
+  ⚠️ 示範用歌詞資料（避免直接使用版權歌詞）
+  若你有合法 API / 自建歌詞資料庫，可在此替換
+*/
+
+const demoLyrics = {
+  "HOME": [
+    { en: "I'm at the edge of the world", zh: "我站在世界的邊緣" },
+    { en: "Calling you my home", zh: "把你稱作我的歸屬" }
+  ],
+  "VERY NICE": [
+    { en: "Very nice", zh: "真的太棒了" },
+    { en: "Feels so good", zh: "感覺超級好" }
+  ]
+};
+
+const form = document.getElementById("song-form");
+const input = document.getElementById("song-input");
+const lyricsBox = document.getElementById("lyrics");
+
+form.addEventListener("submit", function () {
+  const songName = input.value.trim().toUpperCase();
+  lyricsBox.innerHTML = "";
+
+  if (!songName) {
+    lyricsBox.innerHTML = "<div class='translation'>請輸入歌名</div>";
+    return;
+  }
+
+  if (!demoLyrics[songName]) {
+    lyricsBox.innerHTML =
+      "<div class='translation'>找不到此歌曲（示範資料中）</div>";
+    return;
+  }
+
+  demoLyrics[songName].forEach(line => {
+    const div = document.createElement("div");
+    div.className = "lyric-line";
+    div.innerHTML = `
+      <div class="original">${line.en}</div>
+      <div class="translation">${line.zh}</div>
+    `;
+    lyricsBox.appendChild(div);
+  });
+});
+</script>
 
 </body>
 </html>
